@@ -8,6 +8,22 @@
     padding: 0;
 }
 
+.portfolio-preview:hover {
+	cursor: pointer;
+}
+
+.img{
+	position: absolute;
+	top: calc(-1 * var(--gap-vertical));
+	left: calc(-1 * var(--gap-horizontal));
+	width: calc(100% + var(--gap-horizontal) * 2);
+	height: calc(100% + var(--gap-vertical) * 2);
+	background: url(../img/1.jpg) no-repeat 50% 0;
+	background-color: var(--blend-color-1);
+	background-size: cover;
+	background-blend-mode: var(--blend-mode-1);
+}
+
 .portfolio-preview {
     flex: 1;
     position: relative;
@@ -116,6 +132,11 @@
 
 .portfolio-item:hover .portfolio-item-overlay  {
     opacity: 1 !important;
+
+    &::before {
+        border-width: 3px;
+        
+    }
 }
 figure {
     width: 300px;
@@ -125,6 +146,7 @@ figure {
     padding: 0;
     background: #fff;
     overflow: hidden;
+    position: relative;
 
     + .portfolio-item-overlay {
         position: absolute;
@@ -133,7 +155,14 @@ figure {
         transition: opacity 1s ease;
         opacity: 0;
         pointer-events: none;
-
+        
+        &::before {
+            content: '';
+            position: absolute;
+            display: block; 
+            inset: 10px;
+            border: 3px solid #fff;
+        }
 
         span {
             position: absolute;
@@ -194,5 +223,18 @@ figure {
         max-width: 100%;
         height: auto;
         display: block;
+    }
+}
+
+.fade-in {
+    opacity: 0;
+    transform: translateY(-20px);
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }

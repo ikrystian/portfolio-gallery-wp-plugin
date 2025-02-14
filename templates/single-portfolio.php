@@ -22,7 +22,7 @@ defined('ABSPATH') || exit; // Zapobiega bezpośredniemu dostępowi do pliku
         <div class="portfolio-content">
 <!--            <h1>--><?php //the_title(); ?><!--</h1>-->
 <!--            <div class="portfolio-date">--><?php //echo get_the_date(); ?><!--</div>-->
-            <div  style="view-transition-name: portfolio-image;" class="portfolio-image portfolio-image" id="portfolio-image">
+            <div  style="view-transition-name: portfolio-image;" class="portfolio-image" id="portfolio-image">
                 <?php the_post_thumbnail('full'); ?>
             </div>
             <div class="portfolio-text">

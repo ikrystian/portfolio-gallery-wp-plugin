@@ -116,3 +116,18 @@ function custom_plugin_add_image_sizes() {
 	add_image_size('custom-thumbnail', 390, 260, true); // true = przycinanie do wymiarów
 }
 add_action('after_setup_theme', 'custom_plugin_add_image_sizes');
+
+function my_plugin_remove_wpautop_for_portfolio($content) {
+    if (get_post_type() === 'portfolio') {
+        remove_filter('the_content', 'wpautop');
+    }
+    return $content;
+}
+add_filter('the_content', 'my_plugin_remove_wpautop_for_portfolio', 0);
+
+function custom_dynamic_meta_tag() {
+    if (get_post_type() === 'portfolio') {
+        echo '<meta name="view-transition" content="same origin">';
+    }
+}
+add_action('wp_head', 'custom_dynamic_meta_tag');

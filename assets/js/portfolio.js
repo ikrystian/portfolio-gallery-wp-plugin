@@ -44,3 +44,29 @@ jQuery(document).ready(function($) {
         window.location.href = link;
     });
 });
+
+window.navigation.addEventListener('navigate', function(navigateEvent) {
+    const nextUrl = new URL(navigateEvent.destination.url);
+    const currentUrl = new URL(navigation?.currentEntry.url || '');
+
+    navigateEvent.intercept({
+        async handler() {
+            const contennt = await getNewContent(nextUrl);
+
+            document.startViewTransition(() => {
+
+            const main = document.querySelector('main');
+                if(main) main.innerHTML = contennt || ''; 
+            })
+        }
+    });
+
+})
+
+const getNewContent = async(url) => {
+    const page = await fetch(url);
+    const data = await page.text();
+    const mainTagContent = data.match(/<main>([\s\S]*?)<\/main>/)[1];
+
+    return mainTagContent
+}

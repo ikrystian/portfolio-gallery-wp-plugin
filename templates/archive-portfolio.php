@@ -1,6 +1,6 @@
 <?php
 get_header(); ?>
-
+<main>
     <div class="portfolio-container">
         <div class="portfolio-preview">
             <div class="loading-spinner"></div>
@@ -29,5 +29,5 @@ get_header(); ?>
 			<?php endwhile; wp_reset_postdata(); ?>
         </div>
     </div>
-
+    </main>
 <?php get_footer();

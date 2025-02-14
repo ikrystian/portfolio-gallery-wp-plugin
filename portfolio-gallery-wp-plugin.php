@@ -111,3 +111,8 @@ function copy_asset_file($path) {
 		copy($source, $destination);
 	}
 }
+
+function custom_plugin_add_image_sizes() {
+	add_image_size('custom-thumbnail', 390, 260, true); // true = przycinanie do wymiarów
+}
+add_action('after_setup_theme', 'custom_plugin_add_image_sizes');

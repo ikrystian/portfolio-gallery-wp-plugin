@@ -16,18 +16,19 @@ defined('ABSPATH') || exit; // Zapobiega bezpośredniemu dostępowi do pliku
     <body <?php body_class(); ?>>
     <main>
     <div class="single-portfolio">
+    <a href="<?php echo get_post_type_archive_link('portfolio'); ?>" class="back-to-portfolio">
+                Back to Portfolio
+            </a>
         <div class="portfolio-content">
 <!--            <h1>--><?php //the_title(); ?><!--</h1>-->
 <!--            <div class="portfolio-date">--><?php //echo get_the_date(); ?><!--</div>-->
-            <div class="portfolio-image" id="portfolio-image">
+            <div  style="view-transition-name: portfolio-image;" class="portfolio-image portfolio-image" id="portfolio-image">
                 <?php the_post_thumbnail('full'); ?>
             </div>
             <div class="portfolio-text">
                 <?php the_content(); ?>
             </div>
-            <a href="<?php echo get_post_type_archive_link('portfolio'); ?>" class="back-to-portfolio">
-                Back to Portfolio
-            </a>
+
         </div>
     </div>
     </main>

@@ -1,4 +1,4 @@
-jQuery(document).ready(function($) {
+jQuery(document).ready(function ($) {
     const previewContainer = $(".portfolio-preview");
     const spinner = $(".loading-spinner");
     let currentImage = null;
@@ -15,7 +15,7 @@ jQuery(document).ready(function($) {
     spinner.hide();
 
     $(".portfolio-item").hover(
-        function() { // mouseenter
+        function () { // mouseenter
             const fullImage = $(this).data("full");
             if (currentImage && currentImage.src === fullImage) return;
 
@@ -23,10 +23,8 @@ jQuery(document).ready(function($) {
             // Create new image
             loadingImage = createNewImage(fullImage);
 
-            $(loadingImage).on('load', function() {
+            $(loadingImage).on('load', function () {
                 spinner.show();
-
-
                 // Add new image to container
                 previewContainer.append(loadingImage);
                 // Trigger reflow
@@ -39,34 +37,67 @@ jQuery(document).ready(function($) {
         },
     );
 
-    $(".portfolio-item").click(function() {
-        const link = $(this).data("link");
-        window.location.href = link;
-    });
 });
 
-window.navigation.addEventListener('navigate', function(navigateEvent) {
+window.navigation.addEventListener('navigate', function (navigateEvent) {
     const nextUrl = new URL(navigateEvent.destination.url);
     const currentUrl = new URL(navigation?.currentEntry.url || '');
 
     navigateEvent.intercept({
         async handler() {
-            const contennt = await getNewContent(nextUrl);
+            const content = await getNewContent(nextUrl);
 
+
+
+            const main = document.querySelector('body');
+            if (main) main.innerHTML = contennt || '';
+
+            const clickedImage = document.querySelector('.portfolio-item[data-full="' + nextUrl.pathname + '"]');
+
+            if (!main || !clickedImage) return;
+
+            const image = clickedImage.querySelector('img');
+            if (image) image.style.viewTransitionName = 'portfolio-image';
             document.startViewTransition(() => {
-
-            const main = document.querySelector('main');
-                if(main) main.innerHTML = contennt || ''; 
+                main.innerHTML = content;
+                document.documentElement.scrollTop = 0;
             })
+
+
         }
     });
 
 })
 
-const getNewContent = async(url) => {
+
+
+const shouldNotIntercept = (navigateEvent) => {
+    const nextUrl = new URL(navigateEvent.destination.url);
+
+    // Don't animate anything if we're leaving to another domain.
+    if (location.origin !== nextUrl.origin) return true;
+
+    // If we're going to the same page, this could be hot reloading on localhost,
+    // we don't intercept there.
+    if (nextUrl.pathname === window.location.pathname || !nextUrl.pathname) {
+        return true;
+    }
+
+    if (
+        !navigateEvent.canIntercept ||
+        navigateEvent.hashChange ||
+        navigateEvent.formData ||
+        navigateEvent.downloadRequest
+    ) {
+        return true;
+    }
+    return false;
+};
+
+const getNewContent = async (url) => {
     const page = await fetch(url);
     const data = await page.text();
-    const mainTagContent = data.match(/<main>([\s\S]*?)<\/main>/)[1];
+    const mainTagContent = data.match(/<body>(.*?)<\/body>/s)?.[1];
 
-    return mainTagContent
-}
+    return mainTagContent;
+};

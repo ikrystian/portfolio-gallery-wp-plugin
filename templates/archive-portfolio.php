@@ -17,15 +17,14 @@ get_header(); ?>
 				$thumbnail = get_the_post_thumbnail_url(get_the_ID(), 'custom-thumbnail');
 				$full_image = get_the_post_thumbnail_url(get_the_ID(), 'full');
 				?>
-                <div class="portfolio-item"
+                <a href="<?php the_permalink(); ?>" class="portfolio-item"
                      data-full="<?php echo esc_url($full_image); ?>"
-                     data-link="<?php the_permalink(); ?>">
-
-                    <figure><?php the_post_thumbnail('custom-thumbnail'); ?></figure>
+                >
+                    <figure style="view-transition-name: portfolio-image;"><?php the_post_thumbnail('custom-thumbnail'); ?></figure>
                     <div class="portfolio-item-overlay">
                         <span><?php the_title(); ?></span>
                     </div>
-                </div>
+                </a>
 			<?php endwhile; wp_reset_postdata(); ?>
         </div>
     </div>

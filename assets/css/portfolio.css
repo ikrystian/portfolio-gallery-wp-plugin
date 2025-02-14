@@ -1,3 +1,7 @@
+* {
+    box-sizing: border-box;
+}
+
 .portfolio-container {
     display: flex;
     position: fixed;
@@ -9,19 +13,19 @@
 }
 
 .portfolio-preview:hover {
-	cursor: pointer;
+    cursor: pointer;
 }
 
-.img{
-	position: absolute;
-	top: calc(-1 * var(--gap-vertical));
-	left: calc(-1 * var(--gap-horizontal));
-	width: calc(100% + var(--gap-horizontal) * 2);
-	height: calc(100% + var(--gap-vertical) * 2);
-	background: url(../img/1.jpg) no-repeat 50% 0;
-	background-color: var(--blend-color-1);
-	background-size: cover;
-	background-blend-mode: var(--blend-mode-1);
+.img {
+    position: absolute;
+    top: calc(-1 * var(--gap-vertical));
+    left: calc(-1 * var(--gap-horizontal));
+    width: calc(100% + var(--gap-horizontal) * 2);
+    height: calc(100% + var(--gap-vertical) * 2);
+    background: url(../img/1.jpg) no-repeat 50% 0;
+    background-color: var(--blend-color-1);
+    background-size: cover;
+    background-blend-mode: var(--blend-mode-1);
 }
 
 .portfolio-preview {
@@ -53,10 +57,11 @@
 }
 
 .portfolio-thumbnails {
+
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
-    height: 100vh;
+    height: 100dvh;
     overflow-y: auto;
     padding: 20px;
     background: #fff;
@@ -98,6 +103,7 @@
     0% {
         transform: rotate(0deg);
     }
+
     100% {
         transform: rotate(360deg);
     }
@@ -115,32 +121,34 @@
     .portfolio-thumbnails {
         width: 100%;
         height: auto;
+        grid-template-columns: 1fr;
+        align-content: center;
+        display: grid;
         max-height: none;
     }
 
     .portfolio-item {
-        width: calc(50% - 10px);
         display: inline-block;
-        margin: 5px;
-
-        &:hover .portfolio-item-overlay  {
+        margin: 5px;    
+        
+        &:hover .portfolio-item-overlay {
             opacity: 1 !important;
         }
     }
 }
 
 
-.portfolio-item:hover .portfolio-item-overlay  {
+.portfolio-item:hover .portfolio-item-overlay {
     opacity: 1 !important;
 
     &::before {
         border-width: 3px;
-        
+
     }
 }
+
 figure {
-    width: 300px;
-    height: 200px;
+
     aspect-ratio: 39 / 26;
     margin: 0;
     padding: 0;
@@ -148,18 +156,23 @@ figure {
     overflow: hidden;
     position: relative;
 
-    + .portfolio-item-overlay {
+    @media (width > 768px) {
+        width: 300px;
+        height: 200px;
+    }
+
+    +.portfolio-item-overlay {
         position: absolute;
         inset: 0;
         background-color: rgba(0, 0, 0, 0.4);
         transition: opacity 1s ease;
         opacity: 0;
         pointer-events: none;
-        
+
         &::before {
             content: '';
             position: absolute;
-            display: block; 
+            display: block;
             inset: 10px;
             border: 3px solid #fff;
         }
@@ -236,5 +249,24 @@ figure {
     to {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+.portfolio-text {
+    img {
+        max-width: 100%;
+        display: block;
+        height: auto;
+    }
+
+    figcaption {
+        display: none;
+    }
+
+    figure {
+        width: 100%;
+        max-width: 100%;
+        height: unset;
+        aspect-ratio: unset;
     }
 }

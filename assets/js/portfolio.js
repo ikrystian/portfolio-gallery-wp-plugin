@@ -14,9 +14,11 @@ jQuery(document).ready(function ($) {
     $('.preview-image').attr('src', $('.portfolio-item:first-child').data("full")).addClass('loaded')
     spinner.hide();
 
-    $(".portfolio-item").hover(
+    $(".portfolio-item").on('mouseenter',
         function () { // mouseenter
-
+            if($('.preview-image').length % 3 === 0) {
+                $('.preview-image').first().remove()
+            }
             const fullImage = $(this).data("full");
             if (currentImage && currentImage.src === fullImage) return;
                 spinner.show();
